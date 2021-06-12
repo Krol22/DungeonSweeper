@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/197780__samulis__footstep-on-stone-3.wav-2fca27cb9e7bf30a6e1af1876a71b1a2.sample"
+
+[deps]
+
+source_file="res://assets/197780__samulis__footstep-on-stone-3.wav"
+dest_files=[ "res://.import/197780__samulis__footstep-on-stone-3.wav-2fca27cb9e7bf30a6e1af1876a71b1a2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

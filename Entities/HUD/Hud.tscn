@@ -33,13 +33,13 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
-margin_right = 984.0
+margin_right = 760.0
 margin_bottom = 24.0
 alignment = 2
 
 [node name="Progress" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_left = 588.0
-margin_right = 804.0
+margin_left = 364.0
+margin_right = 580.0
 margin_bottom = 24.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
@@ -49,16 +49,16 @@ __meta__ = {
 }
 
 [node name="Revealed" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_left = 808.0
-margin_right = 880.0
+margin_left = 584.0
+margin_right = 656.0
 margin_bottom = 24.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
 text = "100"
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_left = 884.0
-margin_right = 908.0
+margin_left = 660.0
+margin_right = 684.0
 margin_bottom = 24.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
@@ -68,15 +68,15 @@ __meta__ = {
 }
 
 [node name="Hidden" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_left = 912.0
-margin_right = 984.0
+margin_left = 688.0
+margin_right = 760.0
 margin_bottom = 24.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
 text = "200"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer"]
-margin_right = 984.0
+margin_right = 760.0
 margin_bottom = 24.0
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer2"]

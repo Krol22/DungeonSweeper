@@ -7,6 +7,7 @@ onready var activityIndicator = $ActivityIndicator
 onready var animationPlayer = $AnimationPlayer
 onready var animatedSprite = $AnimatedSprite
 onready var moveTween = $MoveTween
+onready var audioPlayer = $AudioStreamPlayer2D
 
 var role
 
@@ -37,6 +38,7 @@ func move(new_position):
 		Tween.EASE_OUT_IN
 	)
 
+	audioPlayer.play()
 	moveTween.start()
 	
 func _on_area_entered(_area):

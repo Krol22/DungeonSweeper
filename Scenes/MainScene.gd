@@ -6,24 +6,36 @@ onready var player2 = $Player2;
 onready var camera = $Camera2D;
 onready var map = $Map;
 onready var hud = $Hud;
+onready var particles = $Particles2D;
+onready var audioPlayer = $AudioStreamPlayer2D;
 
 var active_player = 0
 
 var levels = [
 	{
-		"rows": 10,
-		"cols": 10,
-		"player1_start": Vector2(1, 9),
-		"player2_start": Vector2(0, 9),
-		"number_of_mines": 6
+		"rows": 15,
+		"cols": 15,
+		"number_of_mines": 40
 	},
 	{
 		"rows": 20,
 		"cols": 20,
-		"player1_start": Vector2(1, 19),
-		"player2_start": Vector2(2, 19),
-		"number_of_mines": 50
+		"number_of_mines": 100
 	},
+	{
+		"rows": 25,
+		"cols": 25,
+		"number_of_mines": 200
+	},
+]
+
+const SPAWN_POINT_OFFSETS = [
+	Vector2(-3, 0),
+	Vector2(4, 0),
+	Vector2(0, -3),
+	Vector2(0, 3),
+	Vector2(1, -3),
+	Vector2(1, 3)
 ]
 
 const MONSTER_CELL = 10 # old 6
@@ -85,12 +97,19 @@ func load_level(index):
 			map.set_cellv(Vector2(i, j), 1)
 
 	# spawn player
+	var player1_start = Vector2(active_level.cols / 2, active_level.rows / 2)
+	var player2_start = Vector2(active_level.cols / 2 + 1, active_level.rows / 2)
+
+	active_level.player1_start = player1_start
+	active_level.player2_start = player2_start
+
 	generate_map()
 
-	player1.position = active_level.player1_start * 16;
+	player1.position = player1_start * 16;
 	camera.position = player1.position
+	player2.position = player2_start * 16;
+
 	open_map(active_level.player1_start * 16, false)
-	player2.position = active_level.player2_start * 16;
 	open_map(active_level.player2_start * 16, false)
 	update_hud()
 
@@ -158,6 +177,11 @@ func handle_on_mouse_click(marker_position):
 		var opened_cell = map.get_cellv(map_tile_position)
 		if opened_cell == MONSTER_CELL:
 			game_over()
+		else:
+			particles.position = marker_position
+			particles.emitting = true
+			$Camera2D/Node.start()
+			$AudioStreamPlayer2D.play()
 
 func handle_on_right_click(marker_position):
 	var currently_active_player = get_active_player()
@@ -182,6 +206,8 @@ func handle_on_right_click(marker_position):
 	if cell == QUESTION_MARK_CELL:
 		map.set_cell(x, y, NOT_REVEALED_CELL)
 		not_sure[x][y] = false
+
+	$"/root/ButtonPlayer".play()
 
 func toggle_active_player():
 	if player2.disabled:
@@ -275,7 +301,6 @@ func open_map(marker_position, is_recursive):
 	else:
 		map.set_cellv(Vector2(x, y), cell)
 
-
 	if cell == EMPTY_CELL:
 		for i in 3:
 			for j in 3:
@@ -290,6 +315,15 @@ func generate_map():
 			mapData[i].append(-1)
 
 	var number_of_mines = active_level.number_of_mines
+
+	var player_x = active_level.player1_start.x
+	var player_y = active_level.player1_start.y
+	for i in 5:
+		for j in 6:
+			mapData[player_y + i - 2][player_x + j - 2] = EMPTY_CELL
+
+	for offset in SPAWN_POINT_OFFSETS:
+		mapData[player_y + offset.y][player_x + offset.x] = EMPTY_CELL
 
 	while(number_of_mines > 0):
 		var x = randi() % active_level.cols;

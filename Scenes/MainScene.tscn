@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/MainScene.gd" type="Script" id=1]
 [ext_resource path="res://assets.png" type="Texture" id=2]
 [ext_resource path="res://Entities/Player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Entities/HUD/Hud.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Shared/Shake.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/384871__ali-6868__left-gravel-footstep-2.wav" type="AudioStream" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "assets.png 0"
@@ -193,6 +195,32 @@
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 16, 16 )
 
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0.340741, 1 )
+colors = PoolColorArray( 0.257812, 0.180267, 0.180267, 1, 0.121094, 0.121094, 0.121094, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.0818181 ), -2.98322, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+emission_shape = 1
+emission_sphere_radius = 2.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
+
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -209,6 +237,8 @@ current = true
 zoom = Vector2( 0.375, 0.375 )
 smoothing_enabled = true
 
+[node name="Node" parent="Camera2D" instance=ExtResource( 5 )]
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, 144 )
 
@@ -221,3 +251,20 @@ flip_h = true
 position = Vector2( 32, 104 )
 
 [node name="Hud" parent="." instance=ExtResource( 4 )]
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( -24, 16 )
+scale = Vector2( 2, 2 )
+emitting = false
+amount = 10
+lifetime = 0.2
+one_shot = true
+speed_scale = 0.8
+explosiveness = 0.7
+randomness = 0.77
+process_material = SubResource( 7 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = 0.026
+bus = "New Bus"
