@@ -34,14 +34,13 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_right = 984.0
-margin_bottom = 51.0
+margin_bottom = 24.0
 alignment = 2
 
 [node name="Progress" type="Label" parent="MarginContainer/HBoxContainer"]
 margin_left = 588.0
-margin_top = 13.0
 margin_right = 804.0
-margin_bottom = 37.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
 text = "Progress:"
@@ -51,18 +50,16 @@ __meta__ = {
 
 [node name="Revealed" type="Label" parent="MarginContainer/HBoxContainer"]
 margin_left = 808.0
-margin_top = 13.0
 margin_right = 880.0
-margin_bottom = 37.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
 text = "100"
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer"]
 margin_left = 884.0
-margin_top = 13.0
 margin_right = 908.0
-margin_bottom = 37.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
 text = "/"
@@ -72,30 +69,27 @@ __meta__ = {
 
 [node name="Hidden" type="Label" parent="MarginContainer/HBoxContainer"]
 margin_left = 912.0
-margin_top = 13.0
 margin_right = 984.0
-margin_bottom = 37.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
 text = "200"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer"]
 margin_right = 984.0
-margin_bottom = 51.0
+margin_bottom = 24.0
 
 [node name="Label" type="Label" parent="MarginContainer/HBoxContainer2"]
-margin_top = 13.0
 margin_right = 216.0
-margin_bottom = 37.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.654902, 0.141176, 0.262745, 1 )
 text = "Monsters:"
 
 [node name="Monsters" type="Label" parent="MarginContainer/HBoxContainer2"]
 margin_left = 220.0
-margin_top = 13.0
 margin_right = 244.0
-margin_bottom = 37.0
+margin_bottom = 24.0
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0.654902, 0.141176, 0.262745, 1 )
 text = "0"

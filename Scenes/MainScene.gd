@@ -26,12 +26,17 @@ var levels = [
 	},
 ]
 
+const MONSTER_CELL = 10 # old 6
+const EMPTY_CELL = 0 # old 7
+const NOT_REVEALED_CELL = 1 # old 0
+const MIN_NUMBER_CELL = 2 # old 1
+const MAX_NUMBER_CELL = 9 # old 6 
+const QUESTION_MARK_CELL = 11 # old 8
+
 var active_level_index = 0
-var initialPathNoise = OpenSimplexNoise.new()
 var active_level
 
 var mapData = [];
-var astar = AStar2D.new()
 
 var revealed = []
 var not_sure = []
@@ -41,9 +46,6 @@ var is_game_over = false
 func _ready():
 	randomize()
 	is_game_over = false
-	initialPathNoise.octaves = 2
-	initialPathNoise.persistence = 0.8
-	initialPathNoise.period = 10
 	load_level(0)
 	player1.set_meta("name", "player_1")
 	player2.set_meta("name", "player_2")
@@ -63,7 +65,6 @@ func load_level(index):
 	$Hud.set_revealed(0)
 
 	mapData = []
-	astar = AStar2D.new()
 
 	revealed = []
 	not_sure = []
@@ -81,16 +82,16 @@ func load_level(index):
 	
 	for i in active_level.rows:
 		for j in active_level.cols:
-			map.set_cellv(Vector2(i, j), 0)
+			map.set_cellv(Vector2(i, j), 1)
 
 	# spawn player
 	generate_map()
 
 	player1.position = active_level.player1_start * 16;
 	camera.position = player1.position
-	open_map(active_level.player1_start * 16)
+	open_map(active_level.player1_start * 16, false)
 	player2.position = active_level.player2_start * 16;
-	open_map(active_level.player2_start * 16)
+	open_map(active_level.player2_start * 16, false)
 	update_hud()
 
 	for i in active_level.cols:
@@ -99,8 +100,8 @@ func load_level(index):
 				continue
 
 			var cell = mapData[j][i]
-			if (0 < cell && cell < 6):
-				map.set_cell(i, j, 7)
+			if is_number_cell(cell):
+				map.set_cell(i, j, EMPTY_CELL)
 
 	for i in 3:
 		for j in 3:
@@ -113,7 +114,7 @@ func load_level(index):
 			if !revealed[x][y]:
 				continue
 
-			if (0 < mapData[y][x] && mapData[y][x] < 6):
+			if is_number_cell(mapData[y][x]):
 				map.set_cell(x, y, mapData[y][x])
 
 
@@ -146,16 +147,16 @@ func handle_on_mouse_click(marker_position):
 	var map_tile_position = map.world_to_map(marker_position)
 	var cell = map.get_cellv(map_tile_position)
 
-	if cell == 7 || (0 < cell && cell < 6):
+	if cell == EMPTY_CELL  || is_number_cell(cell):
 		move_player(marker_position)
 
 	if (currently_active_player.role != "tank"):
 		return
 
-	if cell == 0:
-		open_map(marker_position)
+	if cell == NOT_REVEALED_CELL:
+		open_map(marker_position, false)
 		var opened_cell = map.get_cellv(map_tile_position)
-		if opened_cell == 6:
+		if opened_cell == MONSTER_CELL:
 			game_over()
 
 func handle_on_right_click(marker_position):
@@ -169,17 +170,17 @@ func handle_on_right_click(marker_position):
 	var x = marker_position.x / 16
 	var y = marker_position.y / 16
 
-	if cell == 0:
-		map.set_cell(x, y, 6)
+	if cell == NOT_REVEALED_CELL:
+		map.set_cell(x, y, MONSTER_CELL)
 		monster_markers[x][y] = true
 
-	if cell == 6:
-		map.set_cell(x, y, 8)
+	if cell == MONSTER_CELL:
+		map.set_cell(x, y, QUESTION_MARK_CELL)
 		monster_markers[x][y] = false
 		not_sure[x][y] = true
 
-	if cell == 8:
-		map.set_cell(x, y, 0)
+	if cell == QUESTION_MARK_CELL:
+		map.set_cell(x, y, NOT_REVEALED_CELL)
 		not_sure[x][y] = false
 
 func toggle_active_player():
@@ -210,8 +211,8 @@ func move_player(new_position):
 				continue
 
 			var cell = mapData[j][i]
-			if (0 < cell && cell < 6):
-				map.set_cell(i, j, 7)
+			if is_number_cell(cell):
+				map.set_cell(i, j, 0)
 
 	for i in 3:
 		for j in 3:
@@ -224,7 +225,7 @@ func move_player(new_position):
 			if !revealed[x][y]:
 				continue
 
-			if (0 < mapData[y][x] && mapData[y][x] < 6):
+			if is_number_cell(mapData[y][x]):
 				map.set_cell(x, y, mapData[y][x])
 
 func check_win_condition():
@@ -251,7 +252,7 @@ func is_in_range(new_position):
 
 	return abs(player_range.x) <= 16 && abs(player_range.y) <= 16
 
-func open_map(marker_position):
+func open_map(marker_position, is_recursive):
 	var x = marker_position.x / 16
 	var y = marker_position.y / 16
 
@@ -266,16 +267,20 @@ func open_map(marker_position):
 
 	revealed[x][y] = true 
 	var cell = mapData[y][x]
-	if !cell:
-		cell = 7
+	if cell == 1:
+		cell = EMPTY_CELL 
 
-	map.set_cellv(Vector2(x, y), cell)
+	if is_recursive:
+		map.set_cellv(Vector2(x, y), EMPTY_CELL)
+	else:
+		map.set_cellv(Vector2(x, y), cell)
 
-	if cell == 7:
+
+	if cell == EMPTY_CELL:
 		for i in 3:
 			for j in 3:
 				if !(i == 0 && j == 0):
-					open_map(Vector2(marker_position.x + (j - 1) * 16, marker_position.y + (i - 1) * 16))
+					open_map(Vector2(marker_position.x + (j - 1) * 16, marker_position.y + (i - 1) * 16), true)
 
 func generate_map():
 	# generate empty array
@@ -291,16 +296,16 @@ func generate_map():
 		var y = randi() % active_level.rows;
 		if (mapData[y][x] == -1):
 			number_of_mines = number_of_mines - 1
-			mapData[y][x] = 6
+			mapData[y][x] = MONSTER_CELL
 	
 	for i in active_level.rows:
 		for j in active_level.cols:
-			if mapData[i][j] == 6 || mapData[i][j] > 6:
+			if mapData[i][j] == MONSTER_CELL || mapData[i][j] > MONSTER_CELL || mapData[i][j] == 1:
 				continue
 
 			# for each cell count mines around it
 			var value = count_around(i, j)
-			mapData[i][j] = value
+			mapData[i][j] = value + 1
 
 
 func count_around(x, y):
@@ -313,7 +318,7 @@ func count_around(x, y):
 			if x_pos < 0 || y_pos < 0 || x_pos > active_level.cols - 1 || y_pos > active_level.rows - 1:
 				continue
 
-			if (mapData[x_pos][y_pos] == 6):
+			if (mapData[x_pos][y_pos] == MONSTER_CELL):
 				counter = counter + 1
 				
 	return counter
@@ -346,4 +351,5 @@ func update_hud():
 	$Hud.set_revealed(count)
 	$Hud.set_monsters(active_level.number_of_mines - markers_count)
 
-
+func is_number_cell(cell):
+	return MIN_NUMBER_CELL <= cell && cell <= MAX_NUMBER_CELL
