@@ -4,6 +4,10 @@ Entry for [GMTK](https://gmtkgamejam.com/) jam 2021.
 
 ![logo](https://img.itch.zone/aW1nLzYyMDM2OTkucG5n/original/3ou7GV.png)
 
+You can play it here: https://krol22.itch.io/dungeonsweeper.
+
+## Description
+
 It's a minesweeper with classic rules but a step further!
 
 As a player, you can control one of the characters at a time. To switch between characters press "SPACE". Each character has unique abilities that will allow you to progress to the next level.
@@ -17,7 +21,6 @@ Characters:
 Be careful not to hit the monster! They are too dangerous in this dungeon. Encountering one will end in certain death.
 
 Your goal is to check the whole floor to see if it is safe.
-
 
 ## Rules:
 
