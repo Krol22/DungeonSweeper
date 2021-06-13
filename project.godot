@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="GMTK"
+config/name="Dungeon Sweeper"
 run/main_scene="res://Scenes/MenuScene.tscn"
 config/icon="res://icon.png"
 
@@ -49,5 +49,5 @@ ui_swap={
 
 [rendering]
 
-environment/default_clear_color=Color( 0.0392157, 0.0117647, 0.0117647, 1 )
+environment/default_clear_color=Color( 0, 0, 0, 1 )
 environment/default_environment="res://default_env.tres"

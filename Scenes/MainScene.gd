@@ -13,19 +13,19 @@ var active_player = 0
 
 var levels = [
 	{
+		"rows": 10,
+		"cols": 10,
+		"number_of_mines": 10 
+	},
+	{
+		"rows": 10,
+		"cols": 10,
+		"number_of_mines": 15 
+	},
+	{
 		"rows": 15,
 		"cols": 15,
-		"number_of_mines": 40
-	},
-	{
-		"rows": 20,
-		"cols": 20,
-		"number_of_mines": 100
-	},
-	{
-		"rows": 25,
-		"cols": 25,
-		"number_of_mines": 200
+		"number_of_mines": 40 
 	},
 ]
 
@@ -144,6 +144,10 @@ func _process(_delta):
 	var world_mouse_position = get_global_mouse_position()
 	var new_cursor_marker_position = world_mouse_position.snapped(Vector2(16, 16))
 	cursorMarker.position = new_cursor_marker_position - Vector2(8, 8)
+	if is_in_range(new_cursor_marker_position):
+		cursorMarker.play("normal")
+	else:
+		cursorMarker.play("locked")
 
 	if Input.is_action_just_pressed("ui_swap"):
 		toggle_active_player()
@@ -172,7 +176,9 @@ func handle_on_mouse_click(marker_position):
 	if (currently_active_player.role != "tank"):
 		return
 
-	if cell == NOT_REVEALED_CELL:
+	if cell == NOT_REVEALED_CELL || cell == QUESTION_MARK_CELL:
+		not_sure[map_tile_position.x][map_tile_position.y] = false
+		map.set_cellv(marker_position, NOT_REVEALED_CELL)
 		open_map(marker_position, false)
 		var opened_cell = map.get_cellv(map_tile_position)
 		if opened_cell == MONSTER_CELL:
@@ -304,8 +310,7 @@ func open_map(marker_position, is_recursive):
 	if cell == EMPTY_CELL:
 		for i in 3:
 			for j in 3:
-				if !(i == 0 && j == 0):
-					open_map(Vector2(marker_position.x + (j - 1) * 16, marker_position.y + (i - 1) * 16), true)
+				open_map(Vector2(marker_position.x + (j - 1) * 16, marker_position.y + (i - 1) * 16), true)
 
 func generate_map():
 	# generate empty array

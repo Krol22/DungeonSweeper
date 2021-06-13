@@ -63,8 +63,8 @@ margin_right = 800.0
 margin_bottom = 179.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CenterContainer2"]
-margin_left = 49.0
-margin_right = 749.0
+margin_left = 50.0
+margin_right = 750.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 700, 100 )
 custom_fonts/font = SubResource( 1 )
@@ -102,9 +102,8 @@ margin_right = 784.0
 margin_bottom = 100.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CenterContainer3/HBoxContainer/MarginContainer"]
-margin_top = -1.0
 margin_right = 700.0
-margin_bottom = 99.0
+margin_bottom = 100.0
 rect_min_size = Vector2( 700, 100 )
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
@@ -128,9 +127,8 @@ margin_right = 700.0
 margin_bottom = 100.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CenterContainer4/HBoxContainer/MarginContainer"]
-margin_top = -1.0
 margin_right = 700.0
-margin_bottom = 99.0
+margin_bottom = 100.0
 rect_min_size = Vector2( 700, 100 )
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.996078, 0.952941, 0.752941, 1 )
@@ -159,8 +157,8 @@ margin_right = 800.0
 margin_bottom = 466.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CenterContainer5"]
-margin_left = 49.0
-margin_right = 749.0
+margin_left = 50.0
+margin_right = 750.0
 margin_bottom = 75.0
 rect_min_size = Vector2( 700, 75 )
 custom_fonts/font = SubResource( 1 )
@@ -175,8 +173,8 @@ margin_right = 800.0
 margin_bottom = 520.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/CenterContainer6"]
-margin_left = 49.0
-margin_right = 749.0
+margin_left = 50.0
+margin_right = 750.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 700, 50 )
 custom_fonts/font = SubResource( 1 )

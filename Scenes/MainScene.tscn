@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/MainScene.gd" type="Script" id=1]
 [ext_resource path="res://assets.png" type="Texture" id=2]
@@ -191,9 +191,26 @@
 12/shapes = [  ]
 12/z_index = 0
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "locked",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "normal",
+"speed": 5.0
+} ]
 
 [sub_resource type="Gradient" id=3]
 offsets = PoolRealArray( 0.340741, 1 )
@@ -242,8 +259,9 @@ smoothing_enabled = true
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0, 144 )
 
-[node name="CursorMarker" type="Sprite" parent="."]
-texture = SubResource( 2 )
+[node name="CursorMarker" type="AnimatedSprite" parent="."]
+frames = SubResource( 10 )
+animation = "locked"
 centered = false
 flip_h = true
 

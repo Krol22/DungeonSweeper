@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/ForestWalk-320bit.ogg" type="AudioStream" id=1]
+[ext_resource path="res://ForestWalk-320bit.ogg" type="AudioStream" id=1]
 [ext_resource path="res://Shared/MusicPlayer.gd" type="Script" id=2]
 
 [node name="Node" type="Node"]
@@ -8,4 +8,4 @@ script = ExtResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 1 )
-volume_db = -26.39
+volume_db = -8.802

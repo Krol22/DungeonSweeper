@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ForestWalk-320bit.ogg-fd2ede172bafe93d7471dac3c3e6be87.oggstr"
+
+[deps]
+
+source_file="res://ForestWalk-320bit.ogg"
+dest_files=[ "res://.import/ForestWalk-320bit.ogg-fd2ede172bafe93d7471dac3c3e6be87.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

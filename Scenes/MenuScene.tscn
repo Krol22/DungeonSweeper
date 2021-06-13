@@ -53,8 +53,8 @@ margin_bottom = 300.0
 rect_pivot_offset = Vector2( -1504, -344 )
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/CenterContainer"]
-margin_left = 159.0
-margin_right = 559.0
+margin_left = 160.0
+margin_right = 560.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 400, 300 )
 texture = ExtResource( 1 )
